@@ -20,7 +20,7 @@ class Fluent::EventLastValueOutput < Fluent::BufferedOutput
   end
 
   def format(tag, time, record)
-    return '' unless @last_value_key && record[@last_value_key]
+    return '' unless @last_value_key.nil? || record[@last_value_key]
     [record[@id_key], record, (record[@comparator_key] || 0).to_f].to_json + "\n"
   end
 
