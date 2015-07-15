@@ -32,10 +32,10 @@ With a conf like
 You would get
 
 ```
-output.lastvalue { 'id': 12345, 'count': 6 }
-output.lastvalue { 'id': 1337, 'count': 28 }
-output.lastvalue { 'id': 33864, 'count': 24 }
-output.lastvalue { 'id': 40555, 'count': 18 }
+output.lastvalue { 'id': 12345, 'count': 6, 'time': 1413544860 }
+output.lastvalue { 'id': 1337, 'count': 28, 'time': 1413544890 }
+output.lastvalue { 'id': 33864, 'count': 24, 'time': 1413544830 }
+output.lastvalue { 'id': 40555, 'count': 18, 'time': 1413544890 }
 ```
 
 ##Installation
@@ -55,11 +55,11 @@ or
 
 #### Basic
 
-- **id_key** (**required**)
+- **id_key** (**default**:id)
     - The key within the record that identifies a group of events to select from.
 
-- **last_value_key** (**required**)
-    - the key from whose values we want to record the last
+- **last_value_key** (optional)
+    - the key from whose values we want to record the last, if present records sent that do not contain the key will be excluded.
 
 - **emit_to** (optional) - *string*
     - Tag to re-emit with

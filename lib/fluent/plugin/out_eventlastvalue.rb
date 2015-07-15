@@ -6,7 +6,7 @@ class Fluent::EventLastValueOutput < Fluent::BufferedOutput
 
   config_param :emit_to, :string, :default => 'debug.events'
   config_param :id_key, :string, :default => 'id'
-  config_param :last_value_key, :string # REQUIRED
+  config_param :last_value_key, :string, :default => nil
   config_param :comparator_key, :string, :default => nil
 
   attr_accessor :last_values
@@ -20,8 +20,8 @@ class Fluent::EventLastValueOutput < Fluent::BufferedOutput
   end
 
   def format(tag, time, record)
-    return '' unless record[@last_value_key]
-    [record[@id_key], record[@last_value_key], (record[@comparator_key] || 0).to_f].to_json + "\n"
+    return '' unless @last_value_key && record[@last_value_key]
+    [record[@id_key], record, (record[@comparator_key] || 0).to_f].to_json + "\n"
   end
 
   def write(chunk)
@@ -38,8 +38,8 @@ class Fluent::EventLastValueOutput < Fluent::BufferedOutput
       end
     end
 
-    last_values.each do |key, value|
-      Fluent::Engine.emit(@emit_to, Time.now.to_i, @id_key => key, @last_value_key => value, 'ts' => Time.now.to_s)
+    last_values.each do |key, last_record|
+      Fluent::Engine.emit(@emit_to, Time.now.to_i, last_record)
     end
   end
 end

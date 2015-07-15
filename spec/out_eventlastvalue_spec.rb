@@ -16,9 +16,11 @@ describe Fluent::EventLastValueOutput do
     let (:eventlastvalue) { Fluent::Test::BufferedOutputTestDriver.new(Fluent::EventLastValueOutput.new).configure(conf) }
     context 'the input contains the last_value key' do
       it 'produces the expected output' do
+        record = { 'id' => '4444', 'timestamp' => 123456789, 'count' => 12345 }
+
         eventlastvalue.tag = 'something'
-        eventlastvalue.emit( { 'id' => '4444', 'timestamp' => 123456789, 'count' => 12345 }, Time.now )
-        eventlastvalue.expect_format ["4444", 12345, 123456789].to_json + "\n"
+        eventlastvalue.emit( record, Time.now )
+        eventlastvalue.expect_format ["4444", record, record['timestamp'].to_f].to_json + "\n"
         eventlastvalue.run
       end
     end
@@ -58,7 +60,7 @@ describe Fluent::EventLastValueOutput do
         data = JSON.parse line
         eventlastvalue.emit data, Time.now
         output = eventlastvalue.run
-        expect(output['1234']).to eq 12345
+        expect(output['1234']).to eq data
       end
 
       it "returns the latest count given the comparator key" do
@@ -66,9 +68,9 @@ describe Fluent::EventLastValueOutput do
           data = JSON.parse line
           eventlastvalue.emit data, Time.now
         end
-
+        expected = {"email" => "john.doe@example.com", "count" => 12340, "timestamp" => "6", "input_id" => "1234"}
         output = eventlastvalue.run
-        expect(output['1234']).to eq 12340
+        expect(output['1234']).to eq expected
       end
     end
 
@@ -87,9 +89,9 @@ describe Fluent::EventLastValueOutput do
           data = JSON.parse line
           eventlastvalue.emit data, Time.now
         end
-
+        expected = {"email"=>"john.doe@example.com", "count"=>12349, "timestamp"=>"5", "input_id"=>"1234"}
         output = eventlastvalue.run
-        expect(output['1234']).to eq 12349
+        expect(output['1234']).to eq expected
       end
     end
   end
