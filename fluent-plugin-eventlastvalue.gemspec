@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |gem|
   gem.name        = "fluent-plugin-eventlastvalue"
-  gem.version     = "0.0.1"
-  gem.authors     = ["Michael Arick", "Change.org"]
-  gem.email       = ["marick@change.org"]
+  gem.version     = "0.0.2"
+  gem.authors     = ["Michael Arick", "Sean Dick", "Change.org"]
+  gem.email       = ["marick@change.org", "sean@change.org"]
   gem.homepage    = "https://github.com/change/fluent-plugin-eventlastvalue"
-  gem.summary     = %q{Fluentd plugin to find the last value in a time-period of a field and emit it or write it to redis}
-  gem.description = %q{Fluentd plugin to find the last value in a time-period of a field and emit it or write it to redis}
+  gem.summary     = %q{Fluentd plugin to find the last value in a time-period of a field and emit it}
+  gem.description = %q{Fluentd plugin to find the last value in a time-period of a field and emit it}
   gem.license     = "MIT"
 
   gem.files         = `git ls-files`.split("\n")
