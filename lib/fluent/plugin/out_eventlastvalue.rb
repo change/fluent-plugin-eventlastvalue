@@ -4,6 +4,11 @@ class Fluent::EventLastValueOutput < Fluent::BufferedOutput
     super
   end
 
+  # Define `router` method of v0.12 to support v0.10 or earlier
+  unless method_defined?(:router)
+    define_method("router") { Fluent::Engine }
+  end
+
   config_param :emit_to, :string, :default => 'debug.events'
   config_param :id_key, :string, :default => 'id'
   config_param :last_value_key, :string, :default => nil
@@ -39,7 +44,7 @@ class Fluent::EventLastValueOutput < Fluent::BufferedOutput
     end
 
     last_values.each do |key, last_record|
-      Fluent::Engine.emit(@emit_to, Time.now.to_i, last_record)
+      router.emit(@emit_to, Time.now.to_i, last_record)
     end
   end
 end
