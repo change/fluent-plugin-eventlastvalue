@@ -3,7 +3,7 @@ fluent-plugin-eventlastvalue
 
 This plugin is designed to find the last value in a specified key and pass it through as lastvalue as a re-emit. As it's a buffered plugin it will write or re-emit at a (tunable) sane pace.
 
-##Example
+## Example
 
 Given a set of input like
 
@@ -38,7 +38,7 @@ output.lastvalue { 'id': 33864, 'count': 24, 'time': 1413544830 }
 output.lastvalue { 'id': 40555, 'count': 18, 'time': 1413544890 }
 ```
 
-##Installation
+## Installation
 
 OSX
 
@@ -49,9 +49,9 @@ or
     fluent-gem install fluent-plugin-eventlastvalue
 
 
-##Configuration
+## Configuration
 
-###Parameters
+### Parameters
 
 #### Basic
 
