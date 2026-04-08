@@ -1,3 +1,5 @@
+> This repo is no longer maintained.
+
 fluent-plugin-eventlastvalue
 ==========================
 
